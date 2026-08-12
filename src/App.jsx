@@ -935,11 +935,14 @@ function TelaAdmin({ codigos, onSalvarCodigos, onVoltar, adminPasswordKey, senha
   const [novoCodigo, setNovoCodigo] = useState("");
   const [novoTitular, setNovoTitular] = useState("");
   const [novoPlano, setNovoPlano] = useState("mensal");
+  const [novasHoras, setNovasHoras] = useState("2");
   const [novoAcesso, setNovoAcesso] = useState(EXAMS[0]?.id || "todos");
   const [novaSenhaAdmin, setNovaSenhaAdmin] = useState("");
   const [msg, setMsg] = useState("");
 
   const PLANOS = [
+    { id: "personalizado", nome: "Personalizado (horas)", dias: null },
+    { id: "diario", nome: "Diário (24h)", dias: 1 },
     { id: "semanal", nome: "Semanal", dias: 7 },
     { id: "mensal", nome: "Mensal", dias: 30 },
     { id: "anual", nome: "Anual", dias: 365 },
@@ -957,18 +960,27 @@ function TelaAdmin({ codigos, onSalvarCodigos, onVoltar, adminPasswordKey, senha
     const codigo = (novoCodigo.trim() || gerarCodigoAleatorio()).toUpperCase();
     if (codigos.some((c) => c.codigo === codigo)) { setMsg("Esse código já existe."); return; }
     const plano = PLANOS.find((p) => p.id === novoPlano);
-    const expiraEm = plano.dias ? new Date(Date.now() + plano.dias * 24 * 60 * 60 * 1000).toISOString() : null;
+    let expiraEm = null;
+    let nomePlanoFinal = plano.nome;
+    if (plano.id === "personalizado") {
+      const horas = parseFloat(novasHoras) || 0;
+      if (horas <= 0) { setMsg("Indique quantas horas de validade (ex: 2)."); return; }
+      expiraEm = new Date(Date.now() + horas * 60 * 60 * 1000).toISOString();
+      nomePlanoFinal = `${horas}h personalizado`;
+    } else if (plano.dias) {
+      expiraEm = new Date(Date.now() + plano.dias * 24 * 60 * 60 * 1000).toISOString();
+    }
     const { error } = await supabase.from("access_codes").insert({
-      codigo, titular: novoTitular.trim() || "—", plano: plano.id, expira_em: expiraEm, acesso: novoAcesso,
+      codigo, titular: novoTitular.trim() || "—", plano: plano.id === "personalizado" ? `${novasHoras}h` : plano.id, expira_em: expiraEm, acesso: novoAcesso,
     });
     if (error) { setMsg("Não foi possível criar o código."); return; }
     onSalvarCodigos([...codigos, {
       codigo, titular: novoTitular.trim() || "—", criadoEm: new Date().toLocaleDateString("pt-PT"),
-      plano: plano.id, expiraEm, acesso: novoAcesso,
+      plano: plano.id === "personalizado" ? `${novasHoras}h` : plano.id, expiraEm, acesso: novoAcesso,
     }]);
     setNovoCodigo(""); setNovoTitular("");
     const nomeExame = EXAMS.find((e) => e.id === novoAcesso)?.titulo || "Todos os cadernos";
-    setMsg(`Código "${codigo}" criado (${plano.nome} · ${nomeExame}).`);
+    setMsg(`Código "${codigo}" criado (${nomePlanoFinal} · ${nomeExame}).`);
   };
 
   const removerCodigo = async (codigo) => {
@@ -1021,6 +1033,22 @@ function TelaAdmin({ codigos, onSalvarCodigos, onVoltar, adminPasswordKey, senha
             </button>
           ))}
         </div>
+        {novoPlano === "personalizado" && (
+          <div style={{ marginBottom: 14 }}>
+            <p className="sans" style={{ fontSize: 13, color: "#5C4A2E", margin: "0 0 6px" }}>Quantas horas de validade?</p>
+            <input
+              type="number"
+              min="0.5"
+              step="0.5"
+              value={novasHoras}
+              onChange={(e) => setNovasHoras(e.target.value)}
+              placeholder="Ex: 2"
+              className="sans mono"
+              style={{ width: 140, padding: "10px 12px", borderRadius: 4, border: "1px solid #D8CBA8", fontSize: 14 }}
+            />
+            <span className="sans" style={{ fontSize: 13, color: "#8A7B5C", marginLeft: 8 }}>horas</span>
+          </div>
+        )}
         <button onClick={adicionarCodigo} className="sans" style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 18px", borderRadius: 4, border: "none", background: "#1B2A4A", color: "#FBF7EE", fontWeight: 700, fontSize: 14 }}><Plus size={16} /> Criar código</button>
         {msg && <p className="sans" style={{ fontSize: 13, color: "#3A5A40", marginTop: 10 }}>{msg}</p>}
       </div>
@@ -1055,3 +1083,4 @@ function TelaAdmin({ codigos, onSalvarCodigos, onVoltar, adminPasswordKey, senha
     </div>
   );
 }
+
