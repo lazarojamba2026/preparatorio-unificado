@@ -820,21 +820,17 @@ export default function App() {
   };
 };
 
-  const escolhidas = (quantidade >= disponiveis.length ? embaralhar(disponiveis) : embaralhar(disponiveis).slice(0, quantidade)).map(embaralharOpcoesDaQuestao); {
+const iniciarProva = async (quantidade, segundosPorQuestao) => {
     const chave = `usadas-${exameEscolhido.id}-${disciplinaEscolhida.id}`;
     const banco = disciplinaEscolhida.questoes;
     const idQuestao = (q) => q.enunciado.slice(0, 60);
-    // Esta parte usa localStorage do navegador (não o Supabase): serve apenas
-    // para o site "lembrar", neste aparelho, quais questões este candidato já
-    // fez, para não repetir. Não precisa de conta nem de ligação à internet
-    // para funcionar — é só a memória do próprio telemóvel/computador.
     let usadas = [];
     try {
       usadas = JSON.parse(localStorage.getItem(chave) || "[]");
     } catch { usadas = []; }
     let disponiveis = banco.filter((q) => !usadas.includes(idQuestao(q)));
     if (disponiveis.length < quantidade) { disponiveis = banco; usadas = []; }
-    const escolhidas = quantidade >= disponiveis.length ? embaralhar(disponiveis) : embaralhar(disponiveis).slice(0, quantidade);
+    const escolhidas = (quantidade >= disponiveis.length ? embaralhar(disponiveis) : embaralhar(disponiveis).slice(0, quantidade)).map(embaralharOpcoesDaQuestao);
     const novasUsadas = [...usadas, ...escolhidas.map(idQuestao)];
     try { localStorage.setItem(chave, JSON.stringify(novasUsadas)); } catch {}
     setExameAtivo({ ...exameEscolhido, nomeDisciplina: disciplinaEscolhida.nome, questoes: escolhidas, tempoPorQuestaoSeg: segundosPorQuestao });
