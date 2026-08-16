@@ -810,9 +810,17 @@ export default function App() {
       [copia[i], copia[j]] = [copia[j], copia[i]];
     }
     return copia;
+  };const embaralharOpcoesDaQuestao = (questao) => {
+  const opcoesComIndice = questao.opcoes.map((opcao, i) => ({ opcao, eraCorreta: i === questao.correta }));
+  const embaralhadas = embaralhar(opcoesComIndice);
+  return {
+    ...questao,
+    opcoes: embaralhadas.map((o) => o.opcao),
+    correta: embaralhadas.findIndex((o) => o.eraCorreta),
   };
+};
 
-  const iniciarProva = async (quantidade, segundosPorQuestao) => {
+  const escolhidas = (quantidade >= disponiveis.length ? embaralhar(disponiveis) : embaralhar(disponiveis).slice(0, quantidade)).map(embaralharOpcoesDaQuestao); {
     const chave = `usadas-${exameEscolhido.id}-${disciplinaEscolhida.id}`;
     const banco = disciplinaEscolhida.questoes;
     const idQuestao = (q) => q.enunciado.slice(0, 60);
