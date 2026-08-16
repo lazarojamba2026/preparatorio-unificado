@@ -645,9 +645,10 @@ const EXAMS = [
         { enunciado: "Sócrates é conhecido, na história da Filosofia, pelo método:", opcoes: ["Da dúvida metódica cartesiana", "Maiêutico, baseado no diálogo e em perguntas sucessivas", "Do materialismo dialético", "Do empirismo radical"], correta: 1, explicacao: "O método socrático (maiêutica) usa perguntas sucessivas para conduzir o interlocutor à reflexão e ao autoconhecimento." },
         { enunciado: "Para o racionalismo, defendido por autores como Descartes, o conhecimento tem origem fundamentalmente:", opcoes: ["Na experiência sensorial", "Na razão", "Na tradição religiosa exclusivamente", "No acaso"], correta: 1, explicacao: "O racionalismo defende que a razão é a principal fonte segura de conhecimento verdadeiro." },
         { enunciado: "A ética, enquanto ramo da Filosofia, ocupa-se principalmente do estudo:", opcoes: ["Das leis físicas do universo", "Dos princípios que orientam a moral e a conduta humana", "Das regras gramaticais", "Da composição química da matéria"], correta: 1, explicacao: "A ética estuda os fundamentos da moral, dos valores e da conduta humana correta." },
-        { enunciado: "No ensino da Filosofia, o objetivo central da disciplina é, sobretudo:", opcoes: ["Fazer os alunos decorar biografias de filósofos", "Desenvolver o pensamento crítico, o questionamento e a argumentação", "Substituir a Educação Física", "Ensinar cálculo numérico avançado"], correta: 1, explicacao: "A Filosofia visa desenvolver o pensamento crítico, reflexivo e a capacidade argumentativa dos alunos." }
-      {
-    id: "filosofia",
+        { enunciado: "No ensino da Filosofia, o objetivo central da disciplina é, sobretudo:", opcoes: ["Fazer os alunos decorar biografias de filósofos", "Desenvolver o pensamento crítico, o questionamento e a argumentação", "Substituir a Educação Física", "Ensinar cálculo numérico avançado"], correta: 1, explicacao: "A Filosofia visa desenvolver o pensamento crítico, reflexivo e a capacidade argumentativa dos alunos." },
+        {
+                                                                                              }]
+         { id: "filosofia",
     codigo: "FIL-01",
     titulo: "Filosofia",
     subtitulo: "Caderno isolado — 50 questões de Filosofia geral",
