@@ -646,6 +646,7 @@ const EXAMS = [
         { enunciado: "Para o racionalismo, defendido por autores como Descartes, o conhecimento tem origem fundamentalmente:", opcoes: ["Na experiência sensorial", "Na razão", "Na tradição religiosa exclusivamente", "No acaso"], correta: 1, explicacao: "O racionalismo defende que a razão é a principal fonte segura de conhecimento verdadeiro." },
         { enunciado: "A ética, enquanto ramo da Filosofia, ocupa-se principalmente do estudo:", opcoes: ["Das leis físicas do universo", "Dos princípios que orientam a moral e a conduta humana", "Das regras gramaticais", "Da composição química da matéria"], correta: 1, explicacao: "A ética estuda os fundamentos da moral, dos valores e da conduta humana correta." },
         { enunciado: "No ensino da Filosofia, o objetivo central da disciplina é, sobretudo:", opcoes: ["Fazer os alunos decorar biografias de filósofos", "Desenvolver o pensamento crítico, o questionamento e a argumentação", "Substituir a Educação Física", "Ensinar cálculo numérico avançado"], correta: 1, explicacao: "A Filosofia visa desenvolver o pensamento crítico, reflexivo e a capacidade argumentativa dos alunos." }
+      ]},
       { id: "doc-ed-fisica", nome: "Docência — Educação Física", questoes: [
         { enunciado: "Na Educação Física escolar, o desenvolvimento da 'coordenação motora' refere-se essencialmente a:", opcoes: ["A força muscular máxima isolada", "A capacidade de organizar e executar movimentos de forma eficiente e harmoniosa", "Apenas velocidade de corrida", "Resistência cardiovascular exclusivamente"], correta: 1, explicacao: "Coordenação motora é a capacidade de organizar e executar movimentos de forma harmoniosa e eficaz." },
         { enunciado: "O aquecimento antes da actividade física principal tem como objetivo primário:", opcoes: ["Cansar o aluno antes da aula", "Preparar o corpo para o esforço, prevenindo lesões", "Substituir o treino principal", "Avaliar o desempenho final"], correta: 1, explicacao: "O aquecimento prepara fisiologicamente o corpo para o esforço, reduzindo o risco de lesões." },
@@ -1337,3 +1338,4 @@ function TelaAdmin({ codigos, onSalvarCodigos, onVoltar, adminPasswordKey, senha
     </div>
   );
 }
+
